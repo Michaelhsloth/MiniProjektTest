@@ -23,7 +23,7 @@ public class ApiService
 
     public void CallRequestRefresh()
     {
-         RefreshRequired?.Invoke();
+        RefreshRequired?.Invoke();
     }
 
     public async Task<OrdinationResponse?> GetOrdinationer()
@@ -36,7 +36,6 @@ public class ApiService
     {
         string url = $"{baseAPI}patienter/";
         return await http.GetFromJsonAsync<PatientResponse[]>(url);
-
     }
 
     public async Task<Laegemiddel[]?> GetLaegemidler()
@@ -45,7 +44,13 @@ public class ApiService
         return await http.GetFromJsonAsync<Laegemiddel[]>(url);
     }
 
-    public async Task<PN> OpretPN(int patientId, int laegemiddelId, double antal, DateTime startDato, DateTime slutDato)
+    public async Task<PN> OpretPN(
+        int patientId,
+        int laegemiddelId,
+        double antal,
+        DateTime startDato,
+        DateTime slutDato
+    )
     {
         string url = $"{baseAPI}ordinationer/pn/";
         PN_DTO opret = new(patientId, laegemiddelId, antal, startDato, slutDato);
@@ -55,21 +60,43 @@ public class ApiService
         return newPN;
     }
 
-    public async Task<DagligFast> OpretDagligFast(int patientId, int laegemiddelId, 
-        double antalMorgen, double antalMiddag, double antalAften, double antalNat, 
-        DateTime startDato, DateTime slutDato) {
-
+    public async Task<DagligFast> OpretDagligFast(
+        int patientId,
+        int laegemiddelId,
+        double antalMorgen,
+        double antalMiddag,
+        double antalAften,
+        double antalNat,
+        DateTime startDato,
+        DateTime slutDato
+    )
+    {
         string url = $"{baseAPI}ordinationer/dagligfast/";
-        DagligFastDTO opret = new(patientId, laegemiddelId, antalMorgen, antalMiddag, antalAften, antalNat, startDato, slutDato);
+        DagligFastDTO opret =
+            new(
+                patientId,
+                laegemiddelId,
+                antalMorgen,
+                antalMiddag,
+                antalAften,
+                antalNat,
+                startDato,
+                slutDato
+            );
         HttpResponseMessage res = await http.PostAsJsonAsync<DagligFastDTO>(url, opret);
         string json = res.Content.ReadAsStringAsync().Result;
         DagligFast newDagligFast = JsonSerializer.Deserialize<DagligFast>(json)!;
         return newDagligFast;
     }
 
-    public async Task<DagligSkæv> OpretDagligSkaev(int patientId, int laegemiddelId,
-        Dosis[] doser, DateTime startDato, DateTime slutDato) {
-
+    public async Task<DagligSkæv> OpretDagligSkaev(
+        int patientId,
+        int laegemiddelId,
+        Dosis[] doser,
+        DateTime startDato,
+        DateTime slutDato
+    )
+    {
         string url = $"{baseAPI}ordinationer/dagligskaev/";
         DagligSkaevDTO opret = new(patientId, laegemiddelId, doser, startDato, slutDato);
         HttpResponseMessage res = await http.PostAsJsonAsync<DagligSkaevDTO>(url, opret);
@@ -81,16 +108,23 @@ public class ApiService
     public async Task<string> GivDosisPN(PN pn, DateTime date)
     {
         string url = $"{baseAPI}ordinationer/pn/{pn.OrdinationId}/anvend";
-        HttpResponseMessage res = await http.PutAsJsonAsync<DateTimeDTO>(url, new DateTimeDTO(date));
+        HttpResponseMessage res = await http.PutAsJsonAsync<DateTimeDTO>(
+            url,
+            new DateTimeDTO(date)
+        );
         CallRequestRefresh();
         string json = res.Content.ReadAsStringAsync().Result;
         MsgRecord record = JsonSerializer.Deserialize<MsgRecord>(json)!;
         return record.msg;
     }
 
-    public async Task<AnbefaletDosisDTO> GetAnbefaletDosisPerDøgn(int patientId, Laegemiddel lm) {
+    public async Task<AnbefaletDosisDTO> GetAnbefaletDosisPerDøgn(int patientId, Laegemiddel lm)
+    {
         string url = $"{baseAPI}patienter/{patientId}/beregnAnbefaletDosisPerDøgn";
-        HttpResponseMessage res = await http.PostAsJsonAsync<AnbefaletDosisDTO>(url, new AnbefaletDosisDTO(lm.LaegemiddelId, -1));
+        HttpResponseMessage res = await http.PostAsJsonAsync<AnbefaletDosisDTO>(
+            url,
+            new AnbefaletDosisDTO(lm.LaegemiddelId, -1)
+        );
         string json = res.Content.ReadAsStringAsync().Result;
         AnbefaletDosisDTO record = JsonSerializer.Deserialize<AnbefaletDosisDTO>(json)!;
         return record;

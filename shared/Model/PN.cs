@@ -20,14 +20,18 @@ public class PN : Ordination
     /// </summary>
     public bool givDosis(Dato givesDen)
     {
-        // TODO: Implement!
-        return false;
+        if (givesDen.dato >= startDen && givesDen.dato <= slutDen)
+        {
+            dates.Add(givesDen);
+            return true;
+        }
+        else
+            return false;
     }
 
     public override double doegnDosis()
     {
-        // TODO: Implement!
-        return -1;
+        return (dates.Count() * antalEnheder) / ((slutDen - startDen).TotalDays);
     }
 
     public override double samletDosis()

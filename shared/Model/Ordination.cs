@@ -1,14 +1,20 @@
 namespace shared.Model;
 
-public abstract class Ordination {
+public abstract class Ordination
+{
     public int OrdinationId { get; set; }
     public DateTime startDen { get; set; }
     public DateTime slutDen { get; set; }
     public Laegemiddel laegemiddel { get; set; }
-    
-    public Ordination(Laegemiddel laegemiddel, DateTime startDen = new DateTime(), DateTime slutDen = new DateTime()) {
-    	this.startDen = startDen;
-    	this.slutDen = slutDen;
+
+    public Ordination(
+        Laegemiddel laegemiddel,
+        DateTime startDen = new DateTime(),
+        DateTime slutDen = new DateTime()
+    )
+    {
+        this.startDen = startDen;
+        this.slutDen = slutDen;
         this.laegemiddel = laegemiddel;
     }
 
@@ -20,12 +26,14 @@ public abstract class Ordination {
     /// <summary>
     /// Antal hele dage mellem startdato og slutdato. Begge dage inklusive.
     /// </summary>
-    public int antalDage() {
-        // TODO: Implement!
-        return -1;
+    // Ændrede antalDage fra int til double
+    public double antalDage()
+    {
+        return (slutDen - startDen).TotalDays;
     }
 
-    public override String ToString() {
+    public override String ToString()
+    {
         return startDen.ToString();
     }
 

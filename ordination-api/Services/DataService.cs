@@ -242,7 +242,10 @@ public class DataService
 
     public string AnvendOrdination(int id, Dato dato)
     {
-        // TODO: Implement!
+        PN Pn = db.PNs.FirstOrDefault(a => a.OrdinationId == id);
+        Pn.givDosis(dato);
+
+        db.SaveChanges();
         return null!;
     }
 
@@ -255,7 +258,29 @@ public class DataService
     /// <returns></returns>
     public double GetAnbefaletDosisPerDøgn(int patientId, int laegemiddelId)
     {
-        // TODO: Implement!
-        return -1;
+        if (patientId > 0 && laegemiddelId > 0)
+        {
+            Patient patient = db.Patienter.FirstOrDefault(a => a.PatientId == patientId);
+            Laegemiddel laegemiddel = db.Laegemiddler.FirstOrDefault(
+                a => a.LaegemiddelId == laegemiddelId
+            );
+
+            if (patient.vaegt < 25)
+            {
+                return laegemiddel.enhedPrKgPrDoegnLet;
+            }
+            else if (patient.vaegt <= 120)
+            {
+                return laegemiddel.enhedPrKgPrDoegnNormal;
+            }
+            else
+            {
+                return laegemiddel.enhedPrKgPrDoegnTung;
+            }
+        }
+        else
+        {
+            return -1;
+        }
     }
 }
