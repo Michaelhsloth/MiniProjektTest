@@ -11,18 +11,18 @@ public class PatientTest
         string cpr = "160563-1234";
         string navn = "John";
         double vægt = 83;
-        
+
         Patient patient = new Patient(cpr, navn, vægt);
         Assert.AreEqual(cpr, patient.cprnr);
-
     }
+
     [TestMethod]
     public void PatientForkertCPR()
     {
         string cpr = "160563-1234";
         string navn = "John";
         double vægt = 83;
-        
+
         Patient patient = new Patient(cpr, navn, vægt);
         Assert.AreNotEqual("150855-4321", patient.cprnr);
     }
@@ -33,22 +33,8 @@ public class PatientTest
         string cpr = "160563-1234";
         string navn = "John";
         double vægt = 83;
-        
+
         Patient patient = new Patient(cpr, navn, vægt);
         Assert.AreEqual(navn, patient.navn);
     }
-
-
-    [TestMethod]
-    public void TestDerAltidFejler()
-    {
-        string cpr = "160563-1234";
-        string navn = "John";
-        double vægt = 83;
-
-        Patient patient = new Patient(cpr, navn, vægt);
-        Assert.AreEqual("Egon", patient.navn);
-    }
-
-
 }
