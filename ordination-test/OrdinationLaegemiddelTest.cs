@@ -4,7 +4,7 @@ using shared.Model;
 using static shared.Util;
 
 [TestClass]
-public class OrdinationLaegemiddelsEnhedsTest
+public class OrdinationLaegemiddelTest
 {
     [TestMethod]
     public void DagligFastRigtigLaegeMiddel()
@@ -69,5 +69,31 @@ public class OrdinationLaegemiddelsEnhedsTest
         PN dagligPN = new PN(startDato, slutDato, antal, laegemiddel);
 
         Assert.AreEqual(laegemiddler, dagligPN.laegemiddel);
+    }
+
+    [TestMethod]
+    public void EnhedVægtTjekLet()
+    {
+        Laegemiddel laegemiddler = new Laegemiddel();
+
+        laegemiddler = new Laegemiddel("Paracetamol", 1, 1.5, 2, "Ml");
+
+        double enhedPrKg;
+        double vægt = 25;
+
+        if (vægt < 25)
+        {
+            enhedPrKg = laegemiddler.enhedPrKgPrDoegnLet;
+        }
+        else if (vægt <= 120)
+        {
+            enhedPrKg = laegemiddler.enhedPrKgPrDoegnNormal;
+        }
+        else
+        {
+            enhedPrKg = laegemiddler.enhedPrKgPrDoegnTung;
+        }
+
+        Assert.AreEqual(enhedPrKg, laegemiddler.enhedPrKgPrDoegnLet);
     }
 }
