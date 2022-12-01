@@ -79,7 +79,59 @@ public class OrdinationLaegemiddelTest
         laegemiddler = new Laegemiddel("Paracetamol", 1, 1.5, 2, "Ml");
 
         double enhedPrKg;
+        double vægt = 24;
+
+        if (vægt < 25)
+        {
+            enhedPrKg = laegemiddler.enhedPrKgPrDoegnLet;
+        }
+        else if (vægt <= 125)
+        {
+            enhedPrKg = laegemiddler.enhedPrKgPrDoegnNormal;
+        }
+        else
+        {
+            enhedPrKg = laegemiddler.enhedPrKgPrDoegnTung;
+        }
+
+        Assert.AreEqual(enhedPrKg, laegemiddler.enhedPrKgPrDoegnLet);
+    }
+
+    [TestMethod]
+    public void EnhedVægtTjekNormal()
+    {
+        Laegemiddel laegemiddler = new Laegemiddel();
+
+        laegemiddler = new Laegemiddel("Paracetamol", 1, 1.5, 2, "Ml");
+
+        double enhedPrKg;
         double vægt = 25;
+
+        if (vægt < 25)
+        {
+            enhedPrKg = laegemiddler.enhedPrKgPrDoegnLet;
+        }
+        else if (vægt <= 125)
+        {
+            enhedPrKg = laegemiddler.enhedPrKgPrDoegnNormal;
+        }
+        else
+        {
+            enhedPrKg = laegemiddler.enhedPrKgPrDoegnTung;
+        }
+
+        Assert.AreEqual(enhedPrKg, laegemiddler.enhedPrKgPrDoegnNormal);
+    }
+
+    [TestMethod]
+    public void EnhedVægtTjekTung()
+    {
+        Laegemiddel laegemiddler = new Laegemiddel();
+
+        laegemiddler = new Laegemiddel("Paracetamol", 1, 1.5, 2, "Ml");
+
+        double enhedPrKg;
+        double vægt = 126;
 
         if (vægt < 25)
         {
@@ -94,6 +146,6 @@ public class OrdinationLaegemiddelTest
             enhedPrKg = laegemiddler.enhedPrKgPrDoegnTung;
         }
 
-        Assert.AreEqual(enhedPrKg, laegemiddler.enhedPrKgPrDoegnLet);
+        Assert.AreEqual(enhedPrKg, laegemiddler.enhedPrKgPrDoegnTung);
     }
 }
