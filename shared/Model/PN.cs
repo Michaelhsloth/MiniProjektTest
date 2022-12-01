@@ -26,7 +26,9 @@ public class PN : Ordination
             return true;
         }
         else
+        {
             return false;
+        }
     }
 
     public override double doegnDosis()
